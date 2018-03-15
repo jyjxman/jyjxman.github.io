@@ -1,1 +1,56 @@
-dd
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>判断用户输入事件第2遍oninput 和onpropertychange 的用法</title>
+</head>
+ <style>
+        .search {
+            width:300px;
+            height: 30px;
+            margin: 100px auto;
+            position: relative;
+        }
+        .search input {
+            width:200px;
+            height:25px;
+
+        }
+        .search label {
+            font-size: 12px;
+            color:#ccc;
+            position: absolute;
+            top:8px;
+            left:10px;
+            cursor: text;
+        }
+    </style>
+    <script type="text/javascript">
+    业务逻辑分析：
+//           1.内容为空时，光标和默认字显示在搜索框。自动获取焦点
+//           2.当输入内容时，默认字消失。用oninput事件
+
+        window.onload = function () {
+            function $(id){ return document.getElementById(id);}
+            $("txt").focus();//自动获取光标方法
+            $("txt").oninput = $("txt").onpropertychange = function () {
+            //oninput 大部分浏览器支持  检测用户表单输入内容
+            //onpropertychange  ie678  检测用户表单输入内容
+                if ( this.value == ""){
+                    // 首先判断文本框里的值是否为空。注意用双等号！
+                    $("message").style.display = "block";
+                } else {
+                    $("message").style.display = "none";
+                }
+            }
+        }
+    </script>  
+<body>
+<div class="search">
+    <input type="text" id="txt" placeholder="test">
+   <input name="file[]" type="file"  />
+    <!-- 注意label 中for属性 值指向 input 的id值 ，意思是把label标签和input表单相关联。
+    label 元素不会向用户呈现任何特殊效果。当用户在label元素内点击文本， 浏览器就会自动将焦点转到和标签相关联的表单控件上。 -->
+</div>
+</body>
+</html>
